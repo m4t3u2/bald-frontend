@@ -6,9 +6,7 @@ import { catchError } from 'rxjs/operators';
 import { environment } from 'src/environments/environment';
 import { Careca } from '../entities/Careca';
 
-const AUTH_API = environment.apiUrl + '/posts';
-
-const httpOptionsSemAuth = {
+const httpOptions = {
   headers: new HttpHeaders({ 'Content-Type': 'application/json' }),
 };
 
@@ -17,14 +15,14 @@ const httpOptionsSemAuth = {
 })
 export class CarecaService {
   protected getUrl(): string {
-    return AUTH_API + '/careca';
+    return environment.apiUrl + '/careca';
   }
 
   constructor(public http: HttpClient) {}
 
   public buscarCareca(): Observable<any> {
     return this.http
-      .get(this.getUrl(), httpOptionsSemAuth)
+      .get(this.getUrl(), httpOptions)
       .pipe(catchError(this.handleError<Careca>(`buscarCareca=${1}`)));
   }
 
